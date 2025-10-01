@@ -1,0 +1,18 @@
+{
+  "table_name": "products",
+  "columns": [
+    {
+      "name": "product_id",
+      "type": "IntType"
+    },
+    {
+      "name": "title",
+      "type": "VarcharType",
+      "max_length": 100
+    },
+    {
+      "name": "price",
+      "type": "IntType"
+    }
+  ]
+}

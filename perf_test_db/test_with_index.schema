@@ -1,0 +1,18 @@
+{
+  "table_name": "test_with_index",
+  "columns": [
+    {
+      "name": "id",
+      "type": "IntType"
+    },
+    {
+      "name": "value",
+      "type": "IntType"
+    },
+    {
+      "name": "name",
+      "type": "VarcharType",
+      "max_length": 50
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "table_name": "users",
+  "columns": [
+    {
+      "name": "id",
+      "type": "IntType"
+    },
+    {
+      "name": "name",
+      "type": "VarcharType",
+      "max_length": 50
+    },
+    {
+      "name": "age",
+      "type": "IntType"
+    }
+  ]
+}

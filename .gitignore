@@ -1,0 +1,26 @@
+# Python кэш
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Виртуальное окружение
+.venv/
+venv/
+.env
+
+# IDE файлы
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Временные файлы
+*.tmp
+*.log
+
+# Результаты тестов
+tests/test_output/
+
+# Временные файлы базы данных
+*.db-journal
