@@ -6,46 +6,47 @@
 
 ### Папка `lib/` - Пункт 4: Вспомогательные функции/классы
 
-- **4a_table_creator.py** - Создание всех таблиц БД
-- **4b_data_generator.py** - Генерация n строк данных для таблиц с учетом ограничений предметной области
-- **4c_sandbox.py** - Создание "песочницы" - копии БД для исследований
-- **4d_data_saver.py** - Сохранение сгенерированных данных в таблицы
-- **4e_data_cleaner.py** - Удаление/замена всех данных из таблиц
-- **4f_backup_manager.py** - Бэкап и восстановление данных
-- **4h_query_timer.py** - Измерение времени выполнения запросов с использованием timeit
-- **4i_simple_plotter.py** - Построение графиков с matplotlib (с разными цветами, линиями, маркерами, легендой)
+- **table_creator.py** - Создание всех таблиц БД
+- **data_generator.py** - Генерация n строк данных для таблиц с учетом ограничений предметной области
+- **sandbox.py** - Создание "песочницы" - копии БД для исследований
+- **data_saver.py** - Сохранение сгенерированных данных в таблицы
+- **data_cleaner.py** - Удаление/замена всех данных из таблиц
+- **backup_manager.py** - Бэкап и восстановление данных
+- **query_timer.py** - Измерение времени выполнения запросов с использованием timeit
+- **plotter.py** - Построение графиков с matplotlib
 - **db_context.py** - Контекстный менеджер для автоматического коммита/закрытия соединений
 
 ### Папка `investigations/` - Пункт 5: Исследования
 
-- **5_run_all_investigations.py** - Главный файл для запуска всех исследований
-- **5b_data_generation_research.py** - Исследование времени генерации данных для всех таблиц
-- **5c_query_performance_research.py** - Исследование времени выполнения SELECT, INSERT, DELETE запросов
+- **run_investigations.py** - Главный файл для запуска всех исследований
+- **data_generation_research.py** - Исследование времени генерации данных для всех таблиц
+- **query_performance_research.py** - Исследование времени выполнения SELECT, INSERT, DELETE запросов
 - **config.py** - Конфигурация для быстрого изменения параметров исследований
 
 ### Папка `investigations/` - Пункт 6: Исследование эффективности индексов
 
-- **6_comprehensive_index_research.py** - Полное исследование эффективности индексов:
-  - **Пункт a)** Числовые индексы (PRIMARY KEY): SELECT по равенству/неравенству, INSERT
-  - **Пункт b)** Строковые индексы: SELECT с точным совпадением, LIKE по началу, LIKE в любой позиции, INSERT
-  - **Пункт c)** Полнотекстовые индексы: поиск одного слова, поиск нескольких слов
+- **index_efficiency_research.py** - Полное исследование эффективности индексов:
+  - Числовые индексы (PRIMARY KEY): SELECT по равенству/неравенству, INSERT
+  - Строковые индексы: SELECT с точным совпадением, LIKE по началу, LIKE в любой позиции, INSERT
+  - Полнотекстовые индексы: поиск одного слова, поиск нескольких слов
 
-### Папка `seven/` - Пункт 7: Собственная СУБД
+### Папка `lib/seven/` - Пункт 7: Собственная СУБД
 
-- **7_data_types.py** - Типы данных (INT, VARCHAR)
-- **7_schema.py** - Схема таблиц в отдельных файлах
-- **7_table.py** - Хранение данных в двоичном виде
-- **7_indexes.py** - Реализация индексов на числовые столбцы
-- **7_sql_parser.py** - Парсер SQL запросов (CREATE TABLE, SELECT, INSERT, DELETE)
-- **7_dbms.py** - Основная СУБД
-- **7_performance_research.py** - Исследование производительности собственной СУБД
-- **7_demo.py** - Демонстрация работы СУБД
-- **7_main.py** - Главный файл для запуска
+- **data_types.py** - Типы данных (INT, VARCHAR)
+- **table_schema.py** - Схема таблиц в отдельных файлах
+- **binary_table.py** - Хранение данных в двоичном виде
+- **indexes.py** - Реализация индексов на числовые столбцы
+- **sql_parser.py** - Парсер SQL запросов (CREATE TABLE, SELECT, INSERT, DELETE)
+- **my_dbms.py** - Основная СУБД
+- **demo.py** - Демонстрация работы СУБД
 
 ### Папка `tests/` - Пункт 3: Тесты
 
 - **test_table_creator.py** - Тесты создания таблиц
 - **test_data_generator.py** - Тесты генерации данных
+- **test_db_operations.py** - Тесты операций с БД
+- **test_data_operations.py** - Тесты операций с данными
+- **test_utils.py** - Утилитарные тесты
 - **run_all_tests.py** - Запуск всех тестов
 
 ## База данных AutoShipping
@@ -75,9 +76,9 @@ pip install -r requirements.txt
 ### 2. Создание и заполнение БД:
 ```python
 python -c "
-from lib.4a_table_creator import TableCreator
-from lib.4b_data_generator import DataGenerator
-from lib.4d_data_saver import DataSaver
+from lib.table_creator import TableCreator
+from lib.data_generator import DataGenerator
+from lib.data_saver import DataSaver
 from lib.db_context import DatabaseContext
 
 with DatabaseContext('AutoShipping') as conn:
@@ -96,10 +97,10 @@ saver.save_suppliers(suppliers)
 ### 3. Запуск исследований:
 ```bash
 # Все исследования пунктов 5-6
-python investigations/5_run_all_investigations.py
+python investigations/run_investigations.py
 
 # Собственная СУБД (пункт 7)
-python seven/7_main.py
+python lib/seven/demo.py
 ```
 
 ### 4. Запуск тестов:
@@ -113,10 +114,14 @@ python tests/run_all_tests.py
 - `investigations/results/` - графики пунктов 5-6
 - `seven_results/` - графики пункта 7
 
+## Кэш и временные файлы
+
+Кэш-файлы (`.DS_Store`, `__pycache__`) не хранятся в репозитории. Рекомендуется добавить их в `.gitignore`.
+
 ## Особенности реализации
 
-1. **Простота и понятность** - весь код написан максимально просто для объяснения преподавателю
+1. **Простота и понятность** - весь код написан максимально просто
 2. **Автоматическое управление соединениями** - все классы используют контекстные менеджеры
 3. **Гибкая конфигурация** - параметры исследований легко менять в `config.py`
-4. **Полное покрытие задания** - реализованы все пункты от 4 до 7
-5. **Корректная нумерация файлов** - каждый файл имеет префикс с номером пункта задания
+4. **Полное покрытие задания** - реализованы все пункты от 3 до 7
+5. **Минимальные комментарии** - код очищен от лишних комментариев и эмодзи

@@ -11,7 +11,7 @@ class BinaryTable:
         self.data_file = os.path.join(data_directory, f"{schema.table_name}.dat")
         self.row_count = 0
 
-        from indexes import IndexManager
+        from .indexes import IndexManager
         self.index_manager = IndexManager(schema.table_name)
 
         os.makedirs(data_directory, exist_ok=True)

@@ -12,12 +12,7 @@ from investigations.config import PLOT_PARAMS, SANDBOX_PARAMS
 
 
 def main():
-    """Запускает все исследования"""
-    print("=" * 60)
-    print("Запуск всех исследований")
-    print("=" * 60)
 
-    # Создаём папку для результатов
     os.makedirs(PLOT_PARAMS['output_dir'], exist_ok=True)
 
     if SANDBOX_PARAMS['use_sandbox']:
@@ -57,11 +52,6 @@ def main():
         print("Исследование индексов завершено успешно!")
     except Exception as e:
         print(f" Ошибка в исследовании индексов: {e}")
-
-    print()
-    print("Все исследования заверешены!")
-    print("=" * 60)
-    print(f"Результаты сохранены в: {PLOT_PARAMS['output_dir']}")
 
 
 if __name__ == "__main__":
