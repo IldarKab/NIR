@@ -1,21 +1,13 @@
-"""
-Класс для создания всех таблиц базы данных AutoShipping
-"""
+# Класс для создания всех таблиц базы данных AutoShipping
 from .db_context import DatabaseContext
 
 
 class TableCreator:
-    """Класс для создания всех таблиц БД"""
-
     def __init__(self, db_params):
         self.db_params = db_params
 
     def create_all_tables(self):
-        """Создаёт все таблицы в базе данных"""
-
-        # SQL для создания всех таблиц
         create_tables_sql = """
-        -- Таблица клиентов
         CREATE TABLE IF NOT EXISTS clients (
             client_id SERIAL PRIMARY KEY,
             first_name VARCHAR(50) NOT NULL,
@@ -28,7 +20,6 @@ class TableCreator:
             birth_date DATE NOT NULL
         );
 
-        -- Таблица поставщиков/дилеров в Европе
         CREATE TABLE IF NOT EXISTS suppliers (
             supplier_id SERIAL PRIMARY KEY,
             company_name VARCHAR(100) NOT NULL,
@@ -40,7 +31,6 @@ class TableCreator:
             email VARCHAR(100) NOT NULL
         );
 
-        -- Таблица автомобилей
         CREATE TABLE IF NOT EXISTS cars (
             car_id SERIAL PRIMARY KEY,
             vin VARCHAR(17) UNIQUE NOT NULL,
@@ -56,7 +46,6 @@ class TableCreator:
             supplier_id INTEGER REFERENCES suppliers(supplier_id)
         );
 
-        -- Таблица заказов
         CREATE TABLE IF NOT EXISTS orders (
             order_id SERIAL PRIMARY KEY,
             client_id INTEGER REFERENCES clients(client_id),
@@ -69,7 +58,6 @@ class TableCreator:
             customs_cleared BOOLEAN DEFAULT FALSE
         );
 
-        -- Таблица документов клиентов (связь один к одному с клиентами)
         CREATE TABLE IF NOT EXISTS client_documents (
             document_id SERIAL PRIMARY KEY,
             client_id INTEGER UNIQUE REFERENCES clients(client_id),
@@ -79,7 +67,6 @@ class TableCreator:
             upload_date DATE DEFAULT CURRENT_DATE
         );
 
-        -- Таблица услуг
         CREATE TABLE IF NOT EXISTS services (
             service_id SERIAL PRIMARY KEY,
             service_name VARCHAR(100) NOT NULL,
@@ -87,7 +74,6 @@ class TableCreator:
             base_price_rub DECIMAL(10,2) NOT NULL
         );
 
-        -- Таблица связи заказов и услуг (многие ко многим)
         CREATE TABLE IF NOT EXISTS order_services (
             order_id INTEGER REFERENCES orders(order_id),
             service_id INTEGER REFERENCES services(service_id),
@@ -96,7 +82,6 @@ class TableCreator:
             PRIMARY KEY (order_id, service_id)
         );
 
-        -- Создание индексов для оптимизации
         CREATE INDEX IF NOT EXISTS idx_orders_client_id ON orders(client_id);
         CREATE INDEX IF NOT EXISTS idx_orders_car_id ON orders(car_id);
         CREATE INDEX IF NOT EXISTS idx_cars_supplier_id ON cars(supplier_id);
@@ -108,7 +93,6 @@ class TableCreator:
             print("Все таблицы успешно созданы!")
 
     def insert_basic_services(self):
-        """Добавляет базовые услуги в таблицу services"""
         services_sql = """
         INSERT INTO services (service_name, description, base_price_rub) VALUES
         ('Транспортировка', 'Доставка автомобиля из Европы', 80000.00),

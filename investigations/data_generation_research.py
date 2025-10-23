@@ -29,23 +29,18 @@ class DataGenerationInvestigator:
             return params
         return DB_PARAMS
 
-    # настройка окружения для тестов
     def _setup_environment(self):
-        """Настраивает окружение для тестов"""
         if self.use_sandbox:
             print("Создаем песочницу для безопасного тестирования...")
             self.sandbox_manager.create_sandbox()
             print("Песочница создана успешно")
 
-    # очищение окружения
     def _cleanup_environment(self):
-        """Очищает окружение после тестов"""
         if self.use_sandbox and SANDBOX_PARAMS['cleanup_after_test']:
             print("Удаляем песочницу...")
             self.sandbox_manager.delete_sandbox()
             print("Песочница удалена")
 
-    # bзмеряет время генерации данных для таблицы
     def measure_generation_time(self, table_name, size):
         if table_name == 'clients':
             def generate():
@@ -80,7 +75,6 @@ class DataGenerationInvestigator:
         else:
             return 0
 
-        # Измеряем время генерации
         time_taken = timeit.timeit(generate, number=1)
         return time_taken
     # измеряет время генерации связанных таблиц
@@ -128,7 +122,6 @@ class DataGenerationInvestigator:
 
             self.results[table_name] = times
 
-        # Исследуем связанные таблицы
         print("\nИсследуем связанные таблицы (FK):")
 
         fk_results = {

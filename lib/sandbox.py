@@ -2,7 +2,6 @@
 
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from .db_context import DatabaseContext
 
 
 class SandboxManager:
@@ -17,7 +16,6 @@ class SandboxManager:
         postgres_params['database'] = 'postgres'
 
         try:
-            # Подключаемся к системной БД postgres для создания новой БД
             connection = psycopg2.connect(**postgres_params)
             connection.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
             cursor = connection.cursor()
@@ -30,8 +28,7 @@ class SandboxManager:
             """)
             cursor.execute(f'DROP DATABASE IF EXISTS "{self.sandbox_db_name}"')
 
-            # закрываем все соединения с исходной БД для создания копии
-            print("Закрываем активные соединения с исходной БД...")
+            print("Закрываем активные соединения с исходной БД")
             cursor.execute(f"""
                 SELECT pg_terminate_backend(pid)
                 FROM pg_stat_activity

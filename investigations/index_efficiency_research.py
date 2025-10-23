@@ -202,9 +202,9 @@ class IndexEfficiencyInvestigator:
     def investigate_primary_key_performance(self):
         print("Исследование производительности первичного ключа")
 
-        select_equality_results = {'С первичным ключом': [], 'Без первичным ключом': []}
-        select_inequality_results = {'С первичным ключом': [], 'Без первичным ключом': []}
-        insert_results = {'С первичным ключом': [], 'Без первичным ключом': []}
+        select_equality_results = {'С первичным ключом': [], 'без первичного ключа': []}
+        select_inequality_results = {'С первичным ключом': [], 'без первичного ключа': []}
+        insert_results = {'С первичным ключом': [], 'без первичного ключа': []}
 
         for size in INDEX_PARAMS['test_sizes']:
             self.clear_test_tables()
@@ -226,7 +226,7 @@ class IndexEfficiencyInvestigator:
             time_without_pk = self.timer.time_function(query_equality_without_pk, repeat=INDEX_PARAMS['repeat_count'])
 
             select_equality_results['С первичным ключом'].append(time_with_pk)
-            select_equality_results['Без первичным ключом'].append(time_without_pk)
+            select_equality_results['без первичного ключа'].append(time_without_pk)
 
             def query_inequality_with_pk():
                 with DatabaseContext(**self._get_db_params()) as cursor:
@@ -242,7 +242,7 @@ class IndexEfficiencyInvestigator:
             time_without_pk = self.timer.time_function(query_inequality_without_pk, repeat=INDEX_PARAMS['repeat_count'])
 
             select_inequality_results['С первичным ключом'].append(time_with_pk)
-            select_inequality_results['Без первичным ключом'].append(time_without_pk)
+            select_inequality_results['без первичного ключа'].append(time_without_pk)
 
             test_clients_data = self.generator.generate_clients(50)
             test_data = [(cd['first_name'], cd['last_name'], cd['phone'], cd['email']) for cd in test_clients_data]
@@ -262,7 +262,7 @@ class IndexEfficiencyInvestigator:
             time_without_pk = self.timer.time_function(insert_without_pk, repeat=2)
 
             insert_results['С первичным ключом'].append(time_with_pk)
-            insert_results['Без первичным ключом'].append(time_without_pk)
+            insert_results['без первичного ключа'].append(time_without_pk)
 
         self.plotter.create_plot(
             select_equality_results,

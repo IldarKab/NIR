@@ -1,6 +1,5 @@
 # конфигурация для исследований
 
-# Параметры подключения к БД
 DB_PARAMS = {
     'host': 'localhost',
     'database': 'AutoShipping_db',
@@ -9,19 +8,15 @@ DB_PARAMS = {
     'port': 5432
 }
 
-# Параметры для песочницы
 SANDBOX_PARAMS = {
-    'sandbox_db_name': 'AutoShipping_db_sandbox',  # Должно совпадать с логикой SandboxManager
+    'sandbox_db_name': 'AutoShipping_db_sandbox',
     'use_sandbox': True,
     'cleanup_after_test': False
 }
 
-# Параметры для исследования генерации данных
 GENERATION_PARAMS = {
-    # Размеры для тестирования
     'test_sizes': [10, 50, 100, 500, 1000, 2000],
 
-    # Таблицы для исследования
     'tables': {
         'clients': 'Клиенты',
         'suppliers': 'Поставщики',
@@ -32,15 +27,11 @@ GENERATION_PARAMS = {
     }
 }
 
-# Параметры для исследования запросов
 QUERY_PARAMS = {
-    # Размеры для тестирования запросов
     'test_sizes': [50, 100, 200, 500, 1000],
 
-    # Количество повторений для точности измерения
     'repeat_count': 2,
 
-    # Запросы для каждой таблицы
     'queries': {
         'clients': {
             'SELECT все': "SELECT * FROM clients LIMIT %s",
@@ -68,7 +59,6 @@ QUERY_PARAMS = {
         }
     },
 
-    # JOIN запросы для связей
     'join_queries': {
         'clients_orders': {
             'query': "SELECT c.first_name, c.last_name, o.total_cost_rub FROM clients c JOIN orders o ON c.client_id = o.client_id LIMIT %s",
@@ -89,22 +79,17 @@ QUERY_PARAMS = {
     }
 }
 
-# Параметры для графиков
 PLOT_PARAMS = {
     'output_dir': 'investigations/results',
     'figure_size': (10, 6),
     'save_formats': ['png', 'svg']
 }
 
-# Параметры для исследования индексов (Пункт 6)
 INDEX_PARAMS = {
-    # Размеры для тестирования индексов
     'test_sizes': [100, 500, 1000, 2000, 5000],
 
-    # Количество повторений для точности измерения
     'repeat_count': 3,
 
-    # Параметры для пункта 6a - первичный ключ
     'primary_key': {
         'table_with_pk': 'test_clients_with_pk',
         'table_without_pk': 'test_clients_without_pk',
@@ -115,7 +100,6 @@ INDEX_PARAMS = {
         }
     },
 
-    # Параметры для пункта 6b - строковый индекс
     'string_index': {
         'table_with_index': 'test_suppliers_with_index',
         'table_without_index': 'test_suppliers_without_index',
@@ -128,7 +112,6 @@ INDEX_PARAMS = {
         }
     },
 
-    # Параметры для пункта 6c - полнотекстовый индекс
     'fulltext_index': {
         'table_with_index': 'test_cars_with_fulltext',
         'table_without_index': 'test_cars_without_fulltext',

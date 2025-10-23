@@ -9,9 +9,7 @@ class QueryTimer:
     def __init__(self, db_params):
         self.db_params = db_params
 
-    # Измеряет время выполнения произвольного SQL-запроса с повторениями
     def time_query(self, query, params=None, repeat=5):
-        """Измеряет время выполнения произвольного SQL-запроса с повторениями"""
         def execute_query():
             with DatabaseContext(**self.db_params) as cursor:
                 cursor.execute(query, params or ())
